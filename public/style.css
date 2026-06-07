@@ -1,0 +1,44 @@
+:root {
+  --primary-bg-color: hsl(0, 0%, 20%);
+  --secondary-bg-color: rgb(38, 176, 201);
+}
+
+body {
+  background-color: var(--primry-bg-color);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.page-selector {
+  display: flex;
+  flex-direction: column;
+
+  justify-self: center;
+  align-items: center;
+
+  background-color: var(--secondary-bg-color);
+
+  font-size: 2rem;
+  padding: 20px;
+  border-radius: 20px;
+
+  & > a {
+    width: 300px;
+    height: 60px;
+    background-color: aqua;
+    border-radius: 10px;
+
+    text-align: center;
+    align-content: center;
+
+    margin: 10px;
+
+    box-shadow: 5px 5px 5px hsl(0, 0%, 20%);
+    transition-property: all;
+    transition-duration: 20ms;
+
+    &:active {
+      box-shadow: none;
+      transform: translateY(5px);
+    }
+  }
+}
