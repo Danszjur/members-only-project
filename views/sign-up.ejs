@@ -1,34 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
-    <main>
-      <form action="/sign-up" method="POST">
-        <label for="" for="username">Username</label>
-        <input type="text" name="username" id="username" />
 
-        <label for="" for="email">E-mail</label>
-        <input type="text" name="email" id="email" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+</head>
 
-        <label for="" for="first_name">First name</label>
-        <input type="text" name="first_name" id="first_name" />
+<body>
+    <h1>Sign up</h1>
 
-        <label for="" for="last_name">Last name</label>
-        <input type="text" name="last_name" id="last_name" />
+    <% if (errors && errors.length> 0) { %>
+        <ul>
+            <% errors.forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% } %>
 
-        <label for="" for="password_1">Password</label>
-        <input type="text" name="password_1" id="password_1" />
+            <form action="/sign-up" method="POST">
+                <div>
+                    <label for="firstName">First name</label>
+                    <input type="text" id="firstName" name="firstName" value="<%= formData.firstName || '' %>">
+                </div>
 
-        <label for="" for="password_2">Password again</label>
-        <input type="text" name="password_2" id="password_2" />
+                <div>
+                    <label for="lastName">Last name</label>
+                    <input type="text" id="lastName" name="lastName" value="<%= formData.lastName || '' %>">
+                </div>
 
-        <button type="submit">Sing Up</button>
-      </form>
-    </main>
-  </body>
-</html>
+                <div>
+                    <label for="username">Email / username</label>
+                    <input type="email" id="username" name="username" value="<%= formData.username || '' %>">
+                </div>
+
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password">
+                </div>
+
+                <div>
+                    <label for="confirmPassword">Confirm password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword">
+                </div>
+
+                <button type="submit">Create account</button>
+            </form>
+
+            <p><a href="/">Back to home</a></p>
+</body>
+
+</html>s

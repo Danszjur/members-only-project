@@ -1,58 +1,38 @@
-const express = require("express");
-const path = require("node:path");
-const session = require("express-session");
-const passport = require("passport");
 require("dotenv").config();
 
-require("./config/passport");
+const express = require("express");
+const path = require("path");
 
-const indexRouter = require("./routes/indexRouter");
-const authRouter = require("./routes/authRouter");
+const indexRouter = require("./routers/indexRouter");
+const authRouter = require("./routers/authRouter");
 /*
-const memberRouter = require("./routes/memberRouter");
-const messageRouter = require("./routes/messageRouter");
+const messageRouter = require("./routers/messageRouter");
+const memberRouter = require("./routers/memberRouter")
 */
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
+//set view engine
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-//-----------------------------------------------------------------
 
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+//form data
+app.use(express.urlencoded({ extended: false }));
 
-//-----------------------------------------------------------------
+//static files like css or images
+app.use(express.static(path.join(__dirname, "public")))
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "dev_secret",
-    resave: false,
-    saveUninitialized: false,
-  }),
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
-});
-
-//-----------------------------------------------------------------
-
+//routes
 app.use("/", indexRouter);
-//app.use("/", authRouter);
-//app.use("/", memberRouter);
-//app.use("/messages", messageRouter);
+app.use("/", authRouter);
+/*
+app.use("/", messageRouter);
+app.use("/", memberRouter);
+*/
 
-app.use((req, res) => {
-  res.status(404).render("error-page");
-});
-
-//-----------------------------------------------------------------
+//Server start
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
+
 });
