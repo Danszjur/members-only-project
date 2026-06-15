@@ -12,18 +12,75 @@
 <body>
     <header>
         <h1>Members Only</h1>
+
         <nav>
             <ul>
-                <li><a href="/log-in">Log-in</a></li>
-                <li><a href="/sign-up">Sign up</a></li>
-                <li><a href="/join-club">Join the Club</a></li>
+                <% if (currentUser) { %>
+                    <li>
+                        Logged in as:
+                        <%= currentUser.first_name %> <%= currentUser.last_name %>
+                    </li>
+
+                    <% if (currentUser.is_member) { %>
+                        <li>Status: Club member</li>
+                    <% } else { %>
+                        <li>Status: Not a member yet</li>
+                        <li><a href="/join-club">Join the Club</a></li>
+                    <% } %>
+
+                    <% if (currentUser.is_admin) { %>
+                        <li>Status: Admin</li>
+                    <% } else { %>
+                        <li><a href="/admin">Become Admin</a></li>
+                    <% } %>
+
+                    <li><a href="/new-message">Create new message</a></li>
+
+                    <li>
+                        <form action="/log-out" method="POST">
+                            <button type="submit">Log out</button>
+                        </form>
+                    </li>
+                <% } else { %>
+                    <li><a href="/log-in">Log in</a></li>
+                    <li><a href="/sign-up">Sign up</a></li>
+                <% } %>
             </ul>
         </nav>
-        <main>
-            <h2>All messages</h2>
-            <p>no messages yet.</p>
-        </main>
     </header>
+
+    <main>
+        <h2>All messages</h2>
+
+        <% if (messages && messages.length > 0) { %>
+            <% messages.forEach(message => { %>
+                <article>
+                    <h3><%= message.title %></h3>
+                    <p><%= message.text %></p>
+
+                    <% if (currentUser && currentUser.is_member) { %>
+                        <p>
+                            Author:
+                            <%= message.first_name %> <%= message.last_name %>
+                        </p>
+
+                        <p>
+                            Created at:
+                            <%= message.created_at.toLocaleString() %>
+                        </p>
+                    <% } %>
+
+                    <% if (currentUser && currentUser.is_admin) { %>
+                        <form action="/messages/<%= message.id %>/delete" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                    <% } %>
+                </article>
+            <% }) %>
+        <% } else { %>
+            <p>No messages yet.</p>
+        <% } %>
+    </main>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 const { Router } = require("express");
-const indexController = require("../controllers/indexController")
+const indexController = require("../controllers/indexController");
+const queries = require("../db/queries");
 
 const router = Router();
 

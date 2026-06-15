@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+
+<body>
+    <h1>Create New Message</h1>
+
+    <% if (errors && errors.length > 0) { %>
+        <ul>
+            <% errors.forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <form action="/new-message" method="POST">
+        <div>
+            <label for="title">Title</label>
+            <input 
+                type="text" 
+                id="title" 
+                name="title"
+                value="<%= formData.title || '' %>"
+            >
+        </div>
+
+        <div>
+            <label for="text">Message</label>
+            <textarea 
+                id="text" 
+                name="text"
+            ><%= formData.text || '' %></textarea>
+        </div>
+
+        <button type="submit">Create Message</button>
+    </form>
+
+    <p><a href="/">Back to home</a></p>
+</body>
+
+</html>
